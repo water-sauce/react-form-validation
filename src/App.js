@@ -7,7 +7,9 @@ class App extends Component {
 		return (
 			<div className="App">
 				<CreditCardForm />
-				<div className="background right-container container"></div>
+				<div className="container container-right">
+					<h1>Unlock the power of the world’s leading subscription-based model.</h1>
+				</div>
 			</div>
 		);
 	}

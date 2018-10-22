@@ -1,6 +1,7 @@
 import React from 'react';
 import Months from '../components/Months.js';
 import Years from '../components/Years.js';
+import bird from "../images/bird.png"
 
 let d = new Date();
 let currentYear = Number( d.getFullYear() );
@@ -12,7 +13,6 @@ function checkCreditCardType( name, value ){
 		return "amex";
 	}
 }
-
 
 class CreditCardForm extends React.Component {
 	constructor(props) {
@@ -31,6 +31,7 @@ class CreditCardForm extends React.Component {
 			monthSelected: false,
 			year: '',
 			yearSelected: false,
+			formSubmitted: false
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -43,25 +44,30 @@ class CreditCardForm extends React.Component {
 
 		if( name === "creditCardNumber" ){
 			let type = checkCreditCardType( name, value );
-			let cvv = document.getElementById( "cvv" );
 
 			if( type === "amex" ){
-				cvv.setAttribute( "maxLength", "4" );
-				this.state.ccLength = event.target[ "maxLength" ] = 15;
-				this.state.cvvLength = 4;
+				this.setState({ 
+					cvvLength: 4,
+					ccLength: 15
+				});
 			} else {
-				cvv.setAttribute( "maxLength", "3" );
-				this.state.ccLength = event.target[ "maxLength" ] = 16;
-				this.state.cvvLength = 3;
+				this.setState({ 
+					cvvLength: 3,
+					ccLength: 16
+				});
 			}
 		}
 
 		if( name === "month" ){
-			this.state.monthSelected = true;
-		}
+			this.setState({ 
+				monthSelected: true
+			});
+		}  
 
 		if( name === "year" ){
-			this.state.yearSelected = true;
+			this.setState({ 
+				yearSelected: true
+			});
 		}
 
 		this.setState(
@@ -76,15 +82,10 @@ class CreditCardForm extends React.Component {
 			alert( "form submitted" );
 			let fields = {};
 			fields["name"] = "";
-			fields["creditCardNumber"] = "";
-			fields["cvv"] = "";
-			fields["month"] = "";
-			fields["year"] = "";
-			this.submitted = true;
-			this.setState({fields:fields});
+			this.setState({ 
+				formSubmitted: true
+			});
 		}
-
-		console.log( "Name: {this.state.name}, Credit Card num: {this.state.creditCardNumber}, CC: {this.state.cvv}, Month: {this.state.month}, Year: {this.state.year}" );
 	}
 
 	validateForm(){
@@ -94,28 +95,28 @@ class CreditCardForm extends React.Component {
 
 		if( !fields.name ){
 			formIsValid = false;
-			errors["name"] = "*Please fill out this field.";
+			errors["name"] = "Please fill out this field.";
 		}
 
 		if( fields.creditCardNumber.length !== fields.ccLength ){
 			formIsValid = false;
-			errors["creditCardNumber"] = "*Please fill all " + fields.ccLength + " digits."
+			errors["creditCardNumber"] = "Please input your credit card digits."
 		}
 
 		if( fields.cvv.length !== fields.cvvLength ){
 			formIsValid = false;
-			errors["cvv"] = "*Please fill all " + fields.cvvLength + " digits."
+			errors["cvv"] = "Please input your CVV2 digits."
 		}
 
 		if ( !fields.monthSelected || !fields.yearSelected ){
 			formIsValid = false;
-			errors["date"] = "*Please select your credit card expiration date"
+			errors["date"] = "Please select your credit card expiration date"
 		}
 
 		if( fields.yearSelected && fields.monthSelected ){
 			if( Number( fields.year ) === currentYear && Number( fields.month ) < currentMonth ){
 				formIsValid = false;
-				errors["date"] = "*Looks like it's already expired. Please check again."
+				errors["date"] = "Your card may be expired. Please check again."
 			}		
 		}
 
@@ -129,10 +130,11 @@ class CreditCardForm extends React.Component {
 
 	render() {
 		return (
-			<div className="left-container container">
+			<div className="container container-left">
 				<form onSubmit={this.handleSubmit}>
-
-					Please enter your credit card information
+					<img src={bird} alt="little bird" />
+					<h2>Get in the know</h2>
+					<p className="instructions">Please enter your credit card information below.</p>
 
 					<div className="form-group">
 						<label htmlFor="credit card name">Name</label>	
@@ -145,7 +147,7 @@ class CreditCardForm extends React.Component {
 							ref={this.ref}
 							className={this.state.errors.name ? "error" : ""}
 						/>
-						<p className="errorMsg">{this.state.errors.name}</p>
+						{this.state.errors.name ? <p className="errorMsg">{this.state.errors.name}</p> : ""}
 					</div>
 
 					<div className="form-group">
@@ -160,7 +162,7 @@ class CreditCardForm extends React.Component {
 							ref={this.ref}
 							className={this.state.errors.creditCardNumber ? "error" : ""}
 						/>
-						<p className="errorMsg">{this.state.errors.creditCardNumber}</p>
+						{this.state.errors.creditCardNumber ? <p className="errorMsg">{this.state.errors.creditCardNumber}</p> : ""}
 					</div>
 
 					<div className="form-group">
@@ -176,7 +178,7 @@ class CreditCardForm extends React.Component {
 							ref={this.ref}
 							className={this.state.errors.cvv ? "error" : ""}
 						/>
-						<p className="errorMsg">{this.state.errors.cvv}</p>
+						{this.state.errors.cvv ? <p className="errorMsg">{this.state.errors.cvv}</p> : "" }
 					</div>
 
 					<div className="form-group">
@@ -208,12 +210,12 @@ class CreditCardForm extends React.Component {
 								<option key={value} value={value}>{value}</option>
 							)}
 						</select>
-						<p className="errorMsg">{this.state.errors.date}</p>
+						{this.state.errors.date ? <p className="errorMsg">{this.state.errors.date}</p> : "" }
 					</div>
 
 					
 					<button type="submit" className="button button-submit">
-			          	Sign up
+			          	Sign up Now
 			        </button>
 				</form>
 			</div>

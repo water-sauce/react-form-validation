@@ -1,15 +1,51 @@
+.App {
+	display: flex;
+	align-content: center;
+	display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
 .container {
+	height: 100%;
 	width: 50%;
+	display: flex;
+	-webkit-box-pack: center;
+    justify-content: center;
+    align-items: center;
+}
+.container-left {
+	padding-top: 1rem;
+	text-align: center;
+	background: #FFFFFF;
 	height: 100%;
 }
 
-.right-container {
-	
+.container-right {
+	background-size: contain;
+	background: url("images/swag.jpg") no-repeat #91a4be;
+	background-position: center center;
+	box-shadow: inset 3px 0 8px #7d7d7d;
+    min-height: 100vh;
 }
 
-form {
-	padding: 2rem;
-	text-align: center;
+h1 {
+	width: 460px;
+	max-width: 100%;
+	margin: 0 1rem;
+	font-size: 42px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	color: #ffffff;
+	text-shadow: -1px -1px 0 #e45a5a, 1px -1px 0 #edef7e, -1px 1px 0 #44bb3c, 1px 1px 0 #5679dc;
+}
+
+h2 {
+	margin: 0;
+}
+.instructions {
+	margin: 0.25rem 0 1.25rem; 
+	font-size: 14px;
 }
 
 form input {
@@ -20,23 +56,28 @@ form input {
 	width: 300px;
 	max-width: 100%;
 	background: #ffffff;
-	font-size: 16px;
+	font-size: 15px;
 }
 
 form input.error{
-	border: 1px solid red;
+	border: 1px solid #dc3b3b;
 }
 
 form select {
 	max-width: 100%;
-	width: 140px;
-	margin: 0 5px;
-	height: 28px;
-	font-size: 16px;
+	width: calc(50% - 4px);
+	margin: 0 2px;
+	height: 32px;
+	font-size: 15px;
 }
 
 form label{
 	display: none;
+}
+
+form img {
+	height: 50px;
+	margin-bottom: -10px;
 }
 
 .form-group {
@@ -44,19 +85,42 @@ form label{
 }
 
 .errorMsg {
-	font-size: 14px;
-	color: red;
-	margin: 0.25rem 0 0.75rem;
+	font-size: 13px;
+    color: #dc3b3b;
+    margin: 0.25rem 0 0.875rem;
+    text-align: left;
 }
 
 .button-submit {
 	display: block;
-	margin: 0 auto;
-	width: 300px;
-	height: 30px;
-	/*padding: 0.75rem;*/
+	width: 100%;
+	height: 38px;
 	text-transform: uppercase;
 	max-width: 100%;
-	background-color: blue;
+	border: none;
+	background-color: #f97d24;
 	color: white;
+	font-size: 17px;
+	letter-spacing: 1px;
+	font-weight: bold;
+	box-shadow: 0 2px 5px rgba(99,99,99,0.5);
 }
+
+.button-submit:hover {
+	cursor: pointer;
+}
+
+@media only screen and (max-width: 767px) {
+	.App {
+		display: block;
+	}
+	.container {
+		width: 100%;
+	}
+	.container-right {
+		display: none;
+	}
+	h1 {
+		font-size: 32px;
+	}
+}	
